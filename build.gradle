@@ -16,7 +16,7 @@ dependencies {
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.0.0'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.5'
     compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: '2.0.0'
-    compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.23.1'
+    compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.23.0'
     compile 'org.glassfish.jersey.containers:jersey-container-servlet:2.25'
     compile 'com.owlike:genson:1.4'
     compile 'org.mongodb:mongodb-driver:3.4.0'

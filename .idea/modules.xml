@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/appbase.iml" filepath="$PROJECT_DIR$/.idea/modules/appbase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/appbase_main.iml" filepath="$PROJECT_DIR$/.idea/modules/appbase_main.iml" group="appbase" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/appbase_test.iml" filepath="$PROJECT_DIR$/.idea/modules/appbase_test.iml" group="appbase" />
+    </modules>
+  </component>
+</project>

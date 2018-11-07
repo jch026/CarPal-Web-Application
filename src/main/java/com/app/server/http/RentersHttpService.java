@@ -4,8 +4,10 @@ import com.app.server.http.exceptions.APPInternalServerException;
 import com.app.server.http.exceptions.APPNotFoundException;
 import com.app.server.http.utils.APPResponse;
 import com.app.server.http.utils.PATCH;
+import com.app.server.models.Booking;
 import com.app.server.models.Renter;
 import com.app.server.models.RenterPaymentMethod;
+import com.app.server.services.BookingService;
 import com.app.server.services.RenterPaymentMethodService;
 import com.app.server.services.RentersService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,11 +27,13 @@ public class RentersHttpService {
     private RentersService service;
     private ObjectWriter ow;
     private RenterPaymentMethodService serviceRP;
+    private BookingService serviceBooking;
 
 
     public RentersHttpService() {
         service = RentersService.getInstance();
         serviceRP = RenterPaymentMethodService.getInstance();
+        serviceBooking = BookingService.getInstance();
         ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
     }
@@ -86,11 +90,10 @@ public class RentersHttpService {
 
     }
 
-
     @GET
-    @Path("{id}/renterPayment/{idtwo}")
+    @Path("{id}/renterPayment/{renterPaymentId}")
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse getRenterPaymentOne(@PathParam("idtwo") String id) {
+    public APPResponse getRenterPaymentOne(@PathParam("renterPaymentId") String id) {
         try {
             RenterPaymentMethod rp = serviceRP.getOne(id);
             if (rp == null)
@@ -105,6 +108,45 @@ public class RentersHttpService {
         }
 
     }
+
+    @GET
+    @Path("{id}/bookings")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse getBookings(@PathParam("id") String id) {
+        try {
+            ArrayList<Booking> rp = serviceBooking.getAllBookings(id);
+            if (rp == null)
+                throw new APPNotFoundException(57,"Bookings not found");
+            return new APPResponse(rp);
+        }
+        catch(IllegalArgumentException e){
+            throw new APPNotFoundException(57,"Bookings not found");
+        }
+        catch (Exception e) {
+            throw new APPInternalServerException(0,"Something happened. Come back later.");
+        }
+
+    }
+
+    @GET
+    @Path("{id}/bookings/{bookingId}")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse getOneBooking(@PathParam("bookingId") String id) {
+        try {
+            Booking rp = serviceBooking.getOne(id);
+            if (rp == null)
+                throw new APPNotFoundException(57,"Booking not found");
+            return new APPResponse(rp);
+        }
+        catch(IllegalArgumentException e){
+            throw new APPNotFoundException(57,"Booking not found");
+        }
+        catch (Exception e) {
+            throw new APPInternalServerException(0,"Something happened. Come back later.");
+        }
+
+    }
+
 
     @POST
     @Consumes({ MediaType.APPLICATION_JSON})
@@ -122,6 +164,14 @@ public class RentersHttpService {
         return new APPResponse(serviceRP.create(request));
     }
 
+    @POST
+    @Path("{id}/bookings")
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse createBookingMethod(Object request, @PathParam("id") String renterId, String carId) {
+        return new APPResponse(serviceBooking.create(request, renterId, carId));
+    }
+
     @PATCH
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_JSON})
@@ -133,12 +183,22 @@ public class RentersHttpService {
     }
 
     @PATCH
-    @Path("{id}/renterPayment/{idtwo}")
+    @Path("{id}/renterPayment/{renterPaymentId}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public APPResponse updateRenterPayment(@PathParam("idtwo") String idtwo, Object request){
+    public APPResponse updateRenterPayment(@PathParam("renterPaymentId") String renterPaymentId, Object request){
 
-        return new APPResponse(serviceRP.update(idtwo,request));
+        return new APPResponse(serviceRP.update(renterPaymentId,request));
+
+    }
+
+    @PATCH
+    @Path("{id}/bookings/{bookingId}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public APPResponse updateBooking(@PathParam("bookingId") String bookingId, Object request){
+
+        return new APPResponse(serviceRP.update(bookingId,request));
 
     }
 

@@ -5,10 +5,12 @@ import com.app.server.http.exceptions.APPNotFoundException;
 import com.app.server.http.utils.APPResponse;
 import com.app.server.http.utils.PATCH;
 
+import com.app.server.models.Booking;
 import com.app.server.models.Owner;
 import com.app.server.models.Car;
 import com.app.server.models.OwnerPaymentMethod;
 
+import com.app.server.services.BookingService;
 import com.app.server.services.OwnersService;
 import com.app.server.services.CarsService;
 import com.app.server.services.OwnerPaymentMethodService;
@@ -28,6 +30,7 @@ public class OwnersHttpService {
     private OwnersService service;
     private CarsService serviceCS;
     private OwnerPaymentMethodService servicePM;
+    private BookingService serviceBooking;
     private ObjectWriter ow;
 
 
@@ -35,6 +38,7 @@ public class OwnersHttpService {
         service = OwnersService.getInstance();
         serviceCS = CarsService.getInstance();
         servicePM = OwnerPaymentMethodService.getInstance();
+        serviceBooking = BookingService.getInstance();
         ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
     }
@@ -234,6 +238,46 @@ public class OwnersHttpService {
     public APPResponse updateOwnerPayment(@PathParam("id3") String id3, Object request){
 
         return new APPResponse(servicePM.updateOwnerPayment(id3,request));
+
+    }
+
+    /*************Subresource Methods for Bookings******************/
+
+    @GET
+    @Path("{id}/bookings")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse getBookings(@PathParam("id") String id) {
+        try {
+            ArrayList<Booking> rp = serviceBooking.getAllBookings(id);
+            if (rp == null)
+                throw new APPNotFoundException(57,"Bookings not found");
+            return new APPResponse(rp);
+        }
+        catch(IllegalArgumentException e){
+            throw new APPNotFoundException(57,"Bookings not found");
+        }
+        catch (Exception e) {
+            throw new APPInternalServerException(0,"Something happened. Come back later.");
+        }
+
+    }
+
+    @GET
+    @Path("{id}/bookings/{bookingId}")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse getOneBooking(@PathParam("bookingId") String id) {
+        try {
+            Booking rp = serviceBooking.getOne(id);
+            if (rp == null)
+                throw new APPNotFoundException(57,"Booking not found");
+            return new APPResponse(rp);
+        }
+        catch(IllegalArgumentException e){
+            throw new APPNotFoundException(57,"Booking not found");
+        }
+        catch (Exception e) {
+            throw new APPInternalServerException(0,"Something happened. Come back later.");
+        }
 
     }
 
