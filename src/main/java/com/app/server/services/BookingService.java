@@ -77,12 +77,14 @@ public class BookingService {
         return convertDocumentToBooking(item);
     }
 
-    public Booking create(Object request, String renterId, String carId) {
+    public Booking create(Object request, String renterId) {
 
         try {
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
+            String carId = json.getString("carId");
             Booking booking = convertJsonToBooking(json);
+
             Document doc = convertBookingToDocument(booking);
             bookingCollection.insertOne(doc);
             ObjectId id = (ObjectId)doc.get( "_id" );

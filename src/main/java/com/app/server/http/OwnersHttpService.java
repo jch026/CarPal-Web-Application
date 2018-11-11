@@ -205,17 +205,17 @@ public class OwnersHttpService {
     }
 
     @GET
-    @Path("{id}/ownerPayment/{id3}")
+    @Path("{id}/ownerPayment/{ownerPaymentId}")
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse getOnePaymentMethod(@PathParam("id3") String id) {
+    public APPResponse getOnePaymentMethod(@PathParam("ownerPaymentId") String id) {
         try {
             OwnerPaymentMethod pm = servicePM.getOneOwnerPayment(id);
             if (pm == null)
-                throw new APPNotFoundException(57,"RenterPaymentMethod not found");
+                throw new APPNotFoundException(57,"OwnerPaymentMethod not found");
             return new APPResponse(pm);
         }
         catch(IllegalArgumentException e){
-            throw new APPNotFoundException(57,"RenterPaymentMethod not found");
+            throw new APPNotFoundException(57,"OwnerPaymentMethod not found");
         }
         catch (Exception e) {
             throw new APPInternalServerException(0,"Something happened. Come back later.");
@@ -228,16 +228,16 @@ public class OwnersHttpService {
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
     public APPResponse createOwnerPayment(Object request, @PathParam("id") String ownerId) {
-        return new APPResponse(servicePM.createOwnerPayment(request));
+        return new APPResponse(servicePM.createOwnerPayment(request, ownerId));
     }
 
     @PATCH
-    @Path("{id}/ownerPayment/{id3}")
+    @Path("{id}/ownerPayment/{ownerPaymentId}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public APPResponse updateOwnerPayment(@PathParam("id3") String id3, Object request){
+    public APPResponse updateOwnerPayment(@PathParam("ownerPaymentId") String ownerPaymentId, Object request){
 
-        return new APPResponse(servicePM.updateOwnerPayment(id3,request));
+        return new APPResponse(servicePM.updateOwnerPayment(ownerPaymentId,request));
 
     }
 

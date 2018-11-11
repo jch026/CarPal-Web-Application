@@ -32,7 +32,7 @@ public class OwnerPaymentMethod {
     public void setId(String id) {
         this.id = id;
     }
-    public void setOwnerId(String renterId) {
+    public void setOwnerId(String ownerId) {
         this.ownerId = id;
     }
     public void setBookingId(String bookingId) {

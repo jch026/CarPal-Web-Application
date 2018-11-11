@@ -168,8 +168,8 @@ public class RentersHttpService {
     @Path("{id}/bookings")
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse createBookingMethod(Object request, @PathParam("id") String renterId, String carId) {
-        return new APPResponse(serviceBooking.create(request, renterId, carId));
+    public APPResponse createBookingMethod(Object request, @PathParam("id") String renterId) {
+        return new APPResponse(serviceBooking.create(request, renterId));
     }
 
     @PATCH

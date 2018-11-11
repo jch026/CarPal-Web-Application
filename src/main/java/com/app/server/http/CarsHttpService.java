@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
 
-@Path("/owners/{ownerId}/cars")
+@Path("cars")
 
 public class CarsHttpService {
     private CarsService service;
@@ -37,10 +37,11 @@ public class CarsHttpService {
         return Response.ok().build();
     }
 
+
     @GET
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse getAll(@PathParam("ownerId") String ownerId) {
-        return new APPResponse(service.getAllCars(ownerId));
+    public APPResponse getAll() {
+        return new APPResponse(service.getAll());
     }
 
     @GET
@@ -59,37 +60,6 @@ public class CarsHttpService {
         catch(Exception e){
             throw new APPInternalServerException(50, "Something happened. Come back later.");
         }
-    }
-
-//    @POST
-//    @Consumes({ MediaType.APPLICATION_JSON})
-//    @Produces({ MediaType.APPLICATION_JSON})
-//    public APPResponse create(Object request) {
-//        return new APPResponse(service.createCar(request));
-//    }
-
-    @PATCH
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-    public APPResponse update(@PathParam("id") String id, Object request, @PathParam("ownerId") String ownerId){
-
-        return new APPResponse(service.updateCar(id,request));
-    }
-
-    @DELETE
-    @Path("{id}")
-    @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse delete(@PathParam("id") String id) {
-
-        return new APPResponse(service.deleteCar(id));
-    }
-
-    @DELETE
-    @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse delete() {
-
-        return new APPResponse(service.deleteAllCars());
     }
 
 }

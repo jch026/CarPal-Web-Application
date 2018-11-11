@@ -3,6 +3,7 @@ package com.app.server.services;
 import com.app.server.http.exceptions.APPNotFoundException;
 import com.app.server.http.utils.APPResponse;
 import com.app.server.models.Car;
+import com.app.server.models.Owner;
 import com.app.server.util.MongoPool;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,6 +42,22 @@ public class CarsService {
             self = new CarsService();
         return self;
     }
+
+
+    public ArrayList<Car> getAll() {
+        ArrayList<Car> cars = new ArrayList<>();
+        FindIterable<Document> results = this.carsCollection.find();
+        if (results == null) {
+            return cars;
+        }
+
+        for (Document item : results) {
+            Car car = convertDocumentToCar(item);
+            cars.add(car);
+        }
+        return cars;
+    }
+
 
     public ArrayList<Car> getAllCars(String ownerId) {
         ArrayList<Car> cars = new ArrayList<>();
