@@ -1,8 +1,10 @@
 package com.app.server.services;
 
+import com.app.server.http.exceptions.APPBadRequestException;
+import com.app.server.http.exceptions.APPInternalServerException;
 import com.app.server.http.exceptions.APPNotFoundException;
-import com.app.server.http.utils.APPResponse;
-//import com.app.server.models.Car;
+import com.app.server.http.exceptions.APPUnauthorizedException;
+import com.app.server.http.utils.APPCrypt;
 import com.app.server.models.Owner;
 import com.app.server.util.MongoPool;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,9 +17,10 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.json.JSONException;
 import org.json.JSONObject;
+import javax.ws.rs.core.HttpHeaders;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 /**
  * Services run as singletons
@@ -55,27 +58,33 @@ public class OwnersService {
         return ownerList;
     }
 
-    public Owner getOne(String id) {
+    public Owner getOne(String id, HttpHeaders headers) {
+        Document item;
 
-        BasicDBObject query = new BasicDBObject();
-        query.put("_id", new ObjectId(id));
+        try {
+            checkAuthentication(headers, id);
+            BasicDBObject query = new BasicDBObject();
+            query.put("_id", new ObjectId(id));
 
-        Document item = ownersCollection.find(query).first();
-        if (item == null) {
-            return null;
+            item = ownersCollection.find(query).first();
+            if (item == null) {
+                return null;
+            }
+        }catch(Exception e){
+            throw new APPUnauthorizedException(55, "Unauthorized access");
         }
         return convertDocumentToOwner(item);
     }
 
-    public Owner create(Object request) {
+    public Owner create(Object request) throws Exception {
 
         try {
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
-            Owner owner = convertJsonToOwner(json);
-            Document doc = convertOwnerToDocument(owner);
+            Document doc = convertOwnerJSONToDocument(json);
             ownersCollection.insertOne(doc);
             ObjectId id = (ObjectId)doc.get( "_id" );
+            Owner owner = convertDocumentToOwner(doc);
             owner.setId(id.toString());
             return owner;
         } catch(JsonProcessingException e) {
@@ -85,73 +94,50 @@ public class OwnersService {
     }
 
 
-    public Object update(String id, Object request) {
+    public Object update(String id, Object request, HttpHeaders headers) {
         try {
+            checkAuthentication(headers, id);
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
 
             BasicDBObject query = new BasicDBObject();
             query.put("_id", new ObjectId(id));
 
-            Document doc = new Document();
-            if (json.has("firstName"))
-                doc.append("firstName",json.getString("firstName"));
-            if (json.has("lastName"))
-                doc.append("lastName",json.getString("lastName"));
-            if (json.has("phoneNumber"))
-                doc.append("phoneNumber",json.getString("phoneNumber"));
-            if (json.has("username"))
-                doc.append("username",json.getString("username"));
-            if (json.has("password"))
-                doc.append("password",json.getString("password"));
-            if (json.has("email"))
-                doc.append("email",json.getString("email"));
-            if (json.has("license"))
-                doc.append("license",json.getString("license"));
-            if (json.has("accountNumber"))
-                doc.append("accountNumber",json.getString("accountNumber"));
-
-            Document set = new Document("$set", doc);
+            Document set = new Document("$set", convertOwnerJSONToDocument(json));
             ownersCollection.updateOne(query,set);
             return request;
 
-        } catch(JSONException e) {
-            System.out.println("Failed to update a document");
-            return null;
-
-
-        }
-        catch(JsonProcessingException e) {
-            System.out.println("Failed to create a document");
-            return null;
+        } catch (JsonProcessingException e) {
+            throw new APPBadRequestException(33, e.getMessage());
+        } catch (APPBadRequestException e) {
+            throw e;
+        } catch (APPNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new APPInternalServerException(0, e.getMessage());
         }
     }
 
-
-    public Object delete(String id) {
+    /*public Object delete(String id) {
         BasicDBObject query = new BasicDBObject();
         query.put("_id", new ObjectId(id));
-
         ownersCollection.deleteOne(query);
-
         return new JSONObject();
     }
-
 
     public Object deleteAll() {
 
         ownersCollection.deleteMany(new BasicDBObject());
 
         return new JSONObject();
-    }
+    }*/
 
-    private Owner convertDocumentToOwner(Document item) {
+    public Owner convertDocumentToOwner(Document item) {
         Owner owner = new Owner(
                 item.getString("firstName"),
                 item.getString("lastName"),
                 item.getString("phoneNumber"),
                 item.getString("username"),
-                item.getString("password"),
                 item.getString("email"),
                 item.getString("license"),
                 item.getString("accountNumber")
@@ -160,28 +146,38 @@ public class OwnersService {
         return owner;
     }
 
-    private Document convertOwnerToDocument(Owner owner){
-        Document doc = new Document("firstName", owner.getFirstName())
-                .append("lastName", owner.getLastName())
-                .append("phoneNumber", owner.getPhoneNumber())
-                .append("username", owner.getUsername())
-                .append("password", owner.getPassword())
-                .append("email", owner.getEmail())
-                .append("license", owner.getLicense())
-                .append("accountNumber", owner.getAccountNumber());
+    public Document convertOwnerJSONToDocument(JSONObject json) throws Exception {
+
+        Document doc = new Document();
+        if (json.has("firstName"))
+            doc.append("firstName",json.getString("firstName"));
+        if (json.has("lastName"))
+            doc.append("lastName",json.getString("lastName"));
+        if (json.has("phoneNumber"))
+            doc.append("phoneNumber",json.getString("phoneNumber"));
+        if (json.has("username"))
+            doc.append("username",json.getString("username"));
+        if (json.has("password"))
+            doc.append("password", APPCrypt.encrypt(json.getString("password")));
+        if (json.has("email"))
+            doc.append("email",json.getString("email"));
+        if (json.has("license"))
+            doc.append("license",json.getString("license"));
+        if (json.has("accountNumber"))
+            doc.append("accountNumber",json.getString("accountNumber"));
+
         return doc;
     }
 
-    private Owner convertJsonToOwner(JSONObject json){
-        Owner owner = new Owner( json.getString("firstName"),
-                json.getString("lastName"),
-                json.getString("phoneNumber"),
-                json.getString("username"),
-                json.getString("password"),
-                json.getString("email"),
-                json.getString("license"),
-                json.getString("accountNumber"));
-        return owner;
+    void checkAuthentication(HttpHeaders headers,String id) throws Exception{
+        List<String> authHeaders = headers.getRequestHeader(HttpHeaders.AUTHORIZATION);
+        if (authHeaders == null)
+            throw new APPUnauthorizedException(70,"No Authorization Headers");
+        String token = authHeaders.get(0);
+        String clearToken = APPCrypt.decrypt(token);
+        if (id.compareTo(clearToken) != 0) {
+            throw new APPUnauthorizedException(71,"Invalid token. Please try getting a new token");
+        }
     }
 
 } // end of main()

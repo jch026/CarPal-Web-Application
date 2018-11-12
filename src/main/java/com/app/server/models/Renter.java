@@ -18,10 +18,6 @@ public class Renter {
         return username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public String getPhoneno() {
         return phoneno;
     }
@@ -37,16 +33,14 @@ public class Renter {
     String firstName;
     String lastName;
     String username;
-    String password;
     String phoneno;
     String license;
     String email;
 
-    public Renter(String firstName, String lastName, String username, String password, String phoneno, String license, String email) {
+    public Renter(String firstName, String lastName, String username, String phoneno, String license, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
-        this.password = password;
         this.phoneno = phoneno;
         this.license = license;
         this.email = email;

@@ -41,8 +41,7 @@ public class Car {
 
 
 
-    public Car(String ownerId, String carManufacturer, String carModel, String carType, String carYear, String carRegistration, String costOfCar, String carLocation) {
-        this.ownerId = ownerId;
+    public Car(String carManufacturer, String carModel, String carType, String carYear, String carRegistration, String costOfCar, String carLocation) {
         this.carManufacturer = carManufacturer;
         this.carModel = carModel;
         this.carType = carType;

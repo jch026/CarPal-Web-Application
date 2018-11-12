@@ -15,6 +15,8 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -55,9 +57,9 @@ public class RentersHttpService {
     @GET
     @Path("{id}")
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse getOne(@PathParam("id") String id) {
+    public APPResponse getOne(@Context HttpHeaders headers, @PathParam("id") String id) {
         try {
-            Renter r = service.getOne(id);
+            Renter r = service.getOne(id, headers);
             if (r == null)
                 throw new APPNotFoundException(56,"Renter not found");
             return new APPResponse(r);
@@ -74,9 +76,9 @@ public class RentersHttpService {
     @GET
     @Path("{id}/renterPayment")
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse getRenterPayment(@PathParam("id") String id) {
+    public APPResponse getRenterPayment(@Context HttpHeaders headers, @PathParam("id") String id) {
         try {
-            ArrayList<RenterPaymentMethod> rp = serviceRP.getAllFromMain(id);
+            ArrayList<RenterPaymentMethod> rp = serviceRP.getAllFromMain(id, headers);
             if (rp == null)
                 throw new APPNotFoundException(57,"RenterPaymentMethod not found");
             return new APPResponse(rp);
@@ -93,9 +95,9 @@ public class RentersHttpService {
     @GET
     @Path("{id}/renterPayment/{renterPaymentId}")
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse getRenterPaymentOne(@PathParam("renterPaymentId") String id) {
+    public APPResponse getRenterPaymentOne(@Context HttpHeaders headers, @PathParam("renterPaymentId") String id) {
         try {
-            RenterPaymentMethod rp = serviceRP.getOne(id);
+            RenterPaymentMethod rp = serviceRP.getOne(id, headers);
             if (rp == null)
                 throw new APPNotFoundException(57,"RenterPaymentMethod not found");
             return new APPResponse(rp);
@@ -112,9 +114,9 @@ public class RentersHttpService {
     @GET
     @Path("{id}/bookings")
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse getBookings(@PathParam("id") String id) {
+    public APPResponse getBookings(@Context HttpHeaders headers, @PathParam("id") String id) {
         try {
-            ArrayList<Booking> rp = serviceBooking.getAllBookings(id);
+            ArrayList<Booking> rp = serviceBooking.getAllBookings(id,headers);
             if (rp == null)
                 throw new APPNotFoundException(57,"Bookings not found");
             return new APPResponse(rp);
@@ -131,9 +133,9 @@ public class RentersHttpService {
     @GET
     @Path("{id}/bookings/{bookingId}")
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse getOneBooking(@PathParam("bookingId") String id) {
+    public APPResponse getOneBooking(@Context HttpHeaders headers, @PathParam("bookingId") String bookingId,@PathParam("id") String mainId) {
         try {
-            Booking rp = serviceBooking.getOne(id);
+            Booking rp = serviceBooking.getOne(mainId,bookingId,headers);
             if (rp == null)
                 throw new APPNotFoundException(57,"Booking not found");
             return new APPResponse(rp);
@@ -147,38 +149,40 @@ public class RentersHttpService {
 
     }
 
-
+/*
     @POST
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
     public APPResponse create(Object request) {
         return new APPResponse(service.create(request));
     }
+*/
 
+/************Subresource Renter Payment********************/
 
     @POST
     @Path("{id}/renterPayment")
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse createRenterPaymentMethod(Object request, @PathParam("id") String renterId) {
-        return new APPResponse(serviceRP.create(request));
+    public APPResponse createRenterPaymentMethod(@Context HttpHeaders headers, Object request, @PathParam("id") String renterId) {
+        return new APPResponse(serviceRP.create(headers, request, renterId));
     }
 
     @POST
     @Path("{id}/bookings")
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse createBookingMethod(Object request, @PathParam("id") String renterId) {
-        return new APPResponse(serviceBooking.create(request, renterId));
+    public APPResponse createBookingMethod(@Context HttpHeaders headers, Object request, @PathParam("id") String renterId) {
+        return new APPResponse(serviceBooking.create(headers, request, renterId));
     }
 
     @PATCH
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public APPResponse update(@PathParam("id") String id, Object request){
+    public APPResponse update(@Context HttpHeaders headers, @PathParam("id") String id, Object request){
 
-        return new APPResponse(service.update(id,request));
+        return new APPResponse(service.update(id,request, headers));
 
     }
 
@@ -186,9 +190,9 @@ public class RentersHttpService {
     @Path("{id}/renterPayment/{renterPaymentId}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public APPResponse updateRenterPayment(@PathParam("renterPaymentId") String renterPaymentId, Object request){
+    public APPResponse updateRenterPayment(@Context HttpHeaders headers, @PathParam("id") String mainId, @PathParam("renterPaymentId") String renterPaymentId, Object request){
 
-        return new APPResponse(serviceRP.update(renterPaymentId,request));
+        return new APPResponse(serviceRP.update(headers, mainId, renterPaymentId,request));
 
     }
 
@@ -196,25 +200,25 @@ public class RentersHttpService {
     @Path("{id}/bookings/{bookingId}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public APPResponse updateBooking(@PathParam("bookingId") String bookingId, Object request){
+    public APPResponse updateBooking(@Context HttpHeaders headers, @PathParam("id") String mainId, @PathParam("bookingId") String bookingId, Object request){
 
-        return new APPResponse(serviceRP.update(bookingId,request));
+        return new APPResponse(serviceBooking.update(headers, mainId, bookingId, request));
 
     }
 
-    @DELETE
+    /*@DELETE
     @Path("{id}")
     @Produces({ MediaType.APPLICATION_JSON})
     public APPResponse delete(@PathParam("id") String id) {
 
-        return new APPResponse(service.delete(id));
+        return new APPResponse(serviceRP.delete(id));
     }
 
     @DELETE
     @Produces({ MediaType.APPLICATION_JSON})
     public APPResponse delete() {
 
-        return new APPResponse(service.deleteAll());
-    }
+        return new APPResponse(serviceRP.deleteAll());
+    }*/
 
 }

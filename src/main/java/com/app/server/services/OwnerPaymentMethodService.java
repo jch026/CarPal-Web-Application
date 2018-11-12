@@ -15,6 +15,7 @@ import org.bson.types.ObjectId;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.ws.rs.core.HttpHeaders;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,11 +26,13 @@ import java.util.HashMap;
 public class OwnerPaymentMethodService {
 
     private static OwnerPaymentMethodService self;
+    private static OwnersService ownersService;
     private ObjectWriter ow;
     private MongoCollection<Document> ownerPaymentCollection = null;
 
     private OwnerPaymentMethodService() {
         this.ownerPaymentCollection = MongoPool.getInstance().getCollection("ownerPayment");
+        ownersService = OwnersService.getInstance();
         ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
     }
@@ -54,21 +57,30 @@ public class OwnerPaymentMethodService {
 //        return ownerPaymentList;
 //    }
 
-    public ArrayList<OwnerPaymentMethod> getAllOwnerPayments(String id) {
-        ArrayList<OwnerPaymentMethod> ownerPaymentList = new ArrayList<OwnerPaymentMethod>();
+    public ArrayList<OwnerPaymentMethod> getAllOwnerPayments(HttpHeaders headers, String id) {
+        try{
+            ownersService.checkAuthentication(headers, id);
+            ArrayList<OwnerPaymentMethod> ownerPaymentList = new ArrayList<OwnerPaymentMethod>();
 
-        FindIterable<Document> results = this.ownerPaymentCollection.find();
-        if (results == null) {
-            return ownerPaymentList;
-        }
-        for (Document item : results) {
-
-            OwnerPaymentMethod ownerPayment = convertDocumentToOwnerPayment(item);
-            if(ownerPayment.getOwnerId().equals(id)) {
-                ownerPaymentList.add(ownerPayment);
+            FindIterable<Document> results = this.ownerPaymentCollection.find();
+            if (results == null) {
+                return ownerPaymentList;
             }
+            for (Document item : results) {
+
+                OwnerPaymentMethod ownerPayment = convertDocumentToOwnerPayment(item);
+                if(ownerPayment.getOwnerId().equals(id)) {
+                    ownerPaymentList.add(ownerPayment);
+                }
+            }
+            return ownerPaymentList;
+
+        } catch(Exception e) {
+        System.out.println("Failed to update a document");
+        return null;
+
         }
-        return ownerPaymentList;
+
     }
 
 //    public OwnerPaymentMethod getOne(String id) {
@@ -84,20 +96,27 @@ public class OwnerPaymentMethodService {
 //    }
 
 
-    public OwnerPaymentMethod getOneOwnerPayment(String id) {
-        BasicDBObject query = new BasicDBObject();
-        query.put("ownerId", id);
+    public OwnerPaymentMethod getOneOwnerPayment(HttpHeaders headers, String mainId, String opId) {
+        try {
+            ownersService.checkAuthentication(headers, mainId);
+            BasicDBObject query = new BasicDBObject();
+            query.put("ownerId", opId);
 
-        Document item = ownerPaymentCollection.find(query).first();
-        if (item == null) {
+            Document item = ownerPaymentCollection.find(query).first();
+            if (item == null) {
+                return null;
+            }
+            return convertDocumentToOwnerPayment(item);
+        } catch(Exception E){
+            System.out.println("Failed to create a document");
             return null;
         }
-        return convertDocumentToOwnerPayment(item);
     }
 
-    public OwnerPaymentMethod createOwnerPayment(Object request, String ownerId) {
+    public OwnerPaymentMethod createOwnerPayment(HttpHeaders headers, Object request, String ownerId) {
 
         try {
+            ownersService.checkAuthentication(headers, ownerId);
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
             String bookingId = json.getString("bookingId");
@@ -109,20 +128,21 @@ public class OwnerPaymentMethodService {
             ownerPayment.setOwnerId(ownerId);
             ownerPayment.setBookingId(bookingId);
             return ownerPayment;
-        } catch(JsonProcessingException e) {
+        } catch(Exception e) {
             System.out.println("Failed to create a document");
             return null;
         }
     }
 
 
-    public Object updateOwnerPayment(String id, Object request) {
+    public Object updateOwnerPayment(HttpHeaders headers, String mainId, String opId, Object request) {
         try {
+            ownersService.checkAuthentication(headers, mainId);
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
 
             BasicDBObject query = new BasicDBObject();
-            query.put("_id", new ObjectId(id));
+            query.put("_id", new ObjectId(opId));
 
             Document doc = new Document();
             if (json.has("bankAccount"))
@@ -132,15 +152,10 @@ public class OwnerPaymentMethodService {
             ownerPaymentCollection.updateOne(query,set);
             return request;
 
-        } catch(JSONException e) {
+        } catch(Exception e) {
             System.out.println("Failed to update a document");
             return null;
 
-
-        }
-        catch(JsonProcessingException e) {
-            System.out.println("Failed to create a document");
-            return null;
         }
     }
 
@@ -164,7 +179,6 @@ public class OwnerPaymentMethodService {
 
     private OwnerPaymentMethod convertDocumentToOwnerPayment(Document item) {
         OwnerPaymentMethod ownerPayment = new OwnerPaymentMethod(
-                item.getString("ownerId"),
                 item.getString("bankAccount"),
                 item.getString("bookingId")
         );
@@ -173,21 +187,15 @@ public class OwnerPaymentMethodService {
     }
 
     private Document convertOwnerPaymentToDocument(OwnerPaymentMethod ownerPayment){
-        Document doc = new Document("ownerId", ownerPayment.getOwnerId())
-                .append("bankAccount", ownerPayment.getBankAccount())
+        Document doc = new Document("bankAccount", ownerPayment.getBankAccount())
                 .append("bookingId", ownerPayment.getBookingId());
         return doc;
     }
 
     private OwnerPaymentMethod convertJsonToOwnerPayment(JSONObject json){
-        OwnerPaymentMethod ownerPayment = new OwnerPaymentMethod( json.getString("ownerId"),
-                json.getString("bankAccount"),
+        OwnerPaymentMethod ownerPayment = new OwnerPaymentMethod(json.getString("bankAccount"),
                 json.getString("bookingId"));
         return ownerPayment;
     }
-
-
-
-
-} // end of main()
+}
 

@@ -18,8 +18,6 @@ public class Owner {
 
     public String getUsername() { return username; }
 
-    public String getPassword() { return password; }
-
     public String getEmail() { return email; }
 
     public String getLicense() { return license; }
@@ -31,19 +29,17 @@ public class Owner {
     String lastName;
     String phoneNumber;
     String username;
-    String password;
     String email;
     String license;
     String accountNumber;
 
 
 
-    public Owner(String firstName, String lastName, String phoneNumber, String username, String password, String email, String license, String accountNumber) {
+    public Owner(String firstName, String lastName, String phoneNumber, String username, String email, String license, String accountNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.username = username;
-        this.password = password;
         this.email = email;
         this.license = license;
         this.accountNumber = accountNumber;

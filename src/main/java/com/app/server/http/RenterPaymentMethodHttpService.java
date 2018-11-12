@@ -46,7 +46,7 @@ public class RenterPaymentMethodHttpService {
         return new APPResponse(service.getAll());
     }
 
-    @GET
+    /*@GET
     @Path("{id}")
     @Produces({ MediaType.APPLICATION_JSON})
     public APPResponse getOne(@PathParam("id") String id) {
@@ -63,9 +63,9 @@ public class RenterPaymentMethodHttpService {
             throw new APPInternalServerException(0,"Something happened. Come back later.");
         }
 
-    }
+    }*/
 
-    @POST
+    /*@POST
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
     public APPResponse create(Object request) {
@@ -80,9 +80,9 @@ public class RenterPaymentMethodHttpService {
 
         return new APPResponse(service.update(id,request));
 
-    }
+    }*/
 
-    @DELETE
+    /*@DELETE
     @Path("{id}")
     @Produces({ MediaType.APPLICATION_JSON})
     public APPResponse delete(@PathParam("id") String id) {
@@ -95,6 +95,6 @@ public class RenterPaymentMethodHttpService {
     public APPResponse delete() {
 
         return new APPResponse(service.deleteAll());
-    }
+    }*/
 
 }

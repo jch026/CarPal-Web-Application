@@ -1,6 +1,7 @@
 package com.app.server.services;
 
 import com.app.server.http.exceptions.APPNotFoundException;
+import com.app.server.http.exceptions.APPUnauthorizedException;
 import com.app.server.http.utils.APPResponse;
 //import com.app.server.models.Car;
 import com.app.server.models.Booking;
@@ -17,6 +18,7 @@ import org.bson.types.ObjectId;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.ws.rs.core.HttpHeaders;
 import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,12 +30,14 @@ import java.util.HashMap;
 public class BookingService {
 
     private static BookingService self;
+    private static RentersService renterService;
     private ObjectWriter ow;
     private MongoCollection<Document> bookingCollection = null;
 
     private BookingService() {
         this.bookingCollection = MongoPool.getInstance().getCollection("bookings");
         ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        renterService = RentersService.getInstance();
 
     }
 
@@ -43,10 +47,11 @@ public class BookingService {
         return self;
     }
 
-    public ArrayList<Booking> getAllBookings(String id) {
+    public ArrayList<Booking> getAllBookings(String id, HttpHeaders headers) {
         ArrayList<Booking> bookings = new ArrayList<Booking>();
         BasicDBObject query = new BasicDBObject();
         try{
+            renterService.checkAuthentication(headers,id);
             query.put("renterId", new ObjectId(id));
             FindIterable<Document> item = bookingCollection.find(query);
             for (Document document : item) {
@@ -55,31 +60,43 @@ public class BookingService {
             }
 
         }catch (Exception e) {
-            query.put("ownerId", new ObjectId(id));
-            FindIterable<Document> item = bookingCollection.find(query);
-            for (Document document : item) {
-                Booking booking = convertDocumentToBooking(document);
-                bookings.add(booking);
+            try{
+                renterService.checkAuthentication(headers,id);
+                query.put("ownerId", new ObjectId(id));
+                FindIterable<Document> item = bookingCollection.find(query);
+                for (Document document : item) {
+                    Booking booking = convertDocumentToBooking(document);
+                    bookings.add(booking);
+                }
+            }catch (Exception e1){
+                throw new APPNotFoundException(25,"Not found");
             }
+
         }
         return bookings;
     }
 
-    public Booking getOne(String id) {
+    public Booking getOne(String mainId,String bookingId, HttpHeaders headers) {
+        Document item;
+        try{
+            renterService.checkAuthentication(headers,mainId);
+            BasicDBObject query = new BasicDBObject();
+            query.put("_id", new ObjectId(bookingId));
 
-        BasicDBObject query = new BasicDBObject();
-        query.put("_id", new ObjectId(id));
-
-        Document item = bookingCollection.find(query).first();
-        if (item == null) {
-            return null;
+            item = bookingCollection.find(query).first();
+            if (item == null) {
+                return null;
+            }
+        }catch (Exception e){
+            throw new APPNotFoundException(25,"Not found");
         }
         return convertDocumentToBooking(item);
     }
 
-    public Booking create(Object request, String renterId) {
+    public Booking create(HttpHeaders headers, Object request, String renterId) {
 
         try {
+            renterService.checkAuthentication(headers,renterId);
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
             String carId = json.getString("carId");
@@ -96,20 +113,21 @@ public class BookingService {
             booking.setOwnerId(ownerId);
             booking.setCarId(carId);
             return booking;
-        } catch(JsonProcessingException e) {
+        } catch(Exception e) {
             System.out.println("Failed to create a document");
-            return null;
+            throw new APPUnauthorizedException(30, "Error");
         }
     }
 
 
-    public Object update(String id, Object request) {
+    public Object update(HttpHeaders headers, String mainId, String bookingId, Object request) {
         try {
+            renterService.checkAuthentication(headers, mainId);
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
 
             BasicDBObject query = new BasicDBObject();
-            query.put("_id", new ObjectId(id));
+            query.put("_id", new ObjectId(bookingId));
 
             Document doc = new Document();
             if (json.has("date"))
@@ -125,15 +143,10 @@ public class BookingService {
             bookingCollection.updateOne(query,set);
             return request;
 
-        } catch(JSONException e) {
+        } catch(Exception e) {
             System.out.println("Failed to update a document");
             return null;
 
-
-        }
-        catch(JsonProcessingException e) {
-            System.out.println("Failed to create a document");
-            return null;
         }
     }
 

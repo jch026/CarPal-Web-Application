@@ -1,5 +1,7 @@
 package com.app.server.services;
 
+import com.app.server.http.exceptions.APPBadRequestException;
+import com.app.server.http.exceptions.APPInternalServerException;
 import com.app.server.http.exceptions.APPNotFoundException;
 import com.app.server.http.utils.APPResponse;
 import com.app.server.models.Car;
@@ -16,6 +18,8 @@ import org.bson.types.ObjectId;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.print.Doc;
+import javax.ws.rs.core.HttpHeaders;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,13 +32,14 @@ import java.util.List;
 public class CarsService {
 
     private static CarsService self;
+    private static OwnersService ownersService;
     private ObjectWriter ow;
     private MongoCollection<Document> carsCollection = null;
 
     private CarsService() {
         this.carsCollection = MongoPool.getInstance().getCollection("cars");
         ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-
+        ownersService = OwnersService.getInstance();
     }
 
     public static CarsService getInstance(){
@@ -59,65 +64,95 @@ public class CarsService {
     }
 
 
-    public ArrayList<Car> getAllCars(String ownerId) {
-        ArrayList<Car> cars = new ArrayList<>();
-        BasicDBObject query = new BasicDBObject();
-        query.put("ownerId", new ObjectId(ownerId));
+    public ArrayList<Car> getAllCars(String ownerId, HttpHeaders headers) {
+        try{
+            ownersService.checkAuthentication(headers,ownerId);
+            ArrayList<Car> cars = new ArrayList<>();
+            BasicDBObject query = new BasicDBObject();
+            query.put("ownerId", new ObjectId(ownerId));
 
-        FindIterable<Document> item = carsCollection.find(query);
-        for (Document document : item) {
-            Car car = convertDocumentToCar(document);
-            cars.add(car);
-
+            FindIterable<Document> item = carsCollection.find(query);
+            for (Document document : item) {
+                Car car = convertDocumentToCar(document);
+                cars.add(car);
+            }
+            return cars;
+        }catch (Exception e){
+            throw new APPNotFoundException(25,"Not found");
         }
-
-        return cars;
     }
 
-    public Car getOneCar(String id) {
+    public Car getOneCar(String carId) {
+        Document item;
+        try{
+            BasicDBObject query = new BasicDBObject();
+            query.put("_id", new ObjectId(carId));
 
-        BasicDBObject query = new BasicDBObject();
-        query.put("_id", new ObjectId(id));
-
-        Document item = carsCollection.find(query).first();
-        if (item == null) {
-            return null;
+            item = carsCollection.find(query).first();
+            if (item == null) {
+                return null;
+            }
+        }catch (Exception e){
+            throw new APPNotFoundException(25,"Not found");
         }
+
         return convertDocumentToCar(item);
     }
 
-    public Car createCar(Object request, String ownerId) {
+    public Car getOneCar(String carId, String mainId, HttpHeaders headers) {
+        Document item;
+        try{
+            ownersService.checkAuthentication(headers,mainId);
+            BasicDBObject query = new BasicDBObject();
+            query.put("_id", new ObjectId(carId));
+
+            item = carsCollection.find(query).first();
+            if (item == null) {
+                return null;
+            }
+        }catch (Exception e){
+            throw new APPNotFoundException(25,"Not found");
+        }
+
+        return convertDocumentToCar(item);
+    }
+
+    public Car createCar(HttpHeaders headers,Object request, String ownerId) {
 
         try {
+            ownersService.checkAuthentication(headers,ownerId);
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
             Car car = convertJsonToCar(json);
+            car.setOwnerId(ownerId);
             Document doc = convertCarToDocument(car);
             carsCollection.insertOne(doc);
             ObjectId id = (ObjectId)doc.get( "_id" );
             car.setId(id.toString());
 
-            car.setOwnerId(ownerId.toString());
-
             return car;
-        } catch(JsonProcessingException e) {
-            System.out.println("Failed to create a document");
-            return null;
+        } catch (JsonProcessingException e) {
+            throw new APPBadRequestException(33, e.getMessage());
+         } catch (APPBadRequestException e) {
+            throw e;
+        } catch (APPNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new APPInternalServerException(0, e.getMessage());
         }
     }
 
 
-    public Object updateCar(String id, Object request) {
+    public Object updateCar(HttpHeaders headers,String mainId, String carId, Object request) {
         try {
+            ownersService.checkAuthentication(headers,mainId);
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
 
             BasicDBObject query = new BasicDBObject();
-            query.put("_id", new ObjectId(id));
+            query.put("_id", new ObjectId(carId));
 
             Document doc = new Document();
-            if (json.has("ownerId"))
-                doc.append("ownerId",json.getString("ownerId"));
             if (json.has("carManufacturer"))
                 doc.append("carManufacturer",json.getString("carManufacturer"));
             if (json.has("carModel"))
@@ -137,39 +172,37 @@ public class CarsService {
             carsCollection.updateOne(query,set);
             return request;
 
-        } catch(JSONException e) {
+        } catch(Exception e) {
             System.out.println("Failed to update a document");
             return null;
-
-
         }
-        catch(JsonProcessingException e) {
-            System.out.println("Failed to create a document");
+    }
+
+
+    public Object deleteCar(HttpHeaders headers, String mainId, String carId) {
+        try {
+            ownersService.checkAuthentication(headers, mainId);
+            BasicDBObject query = new BasicDBObject();
+            query.put("_id", new ObjectId(carId));
+
+            carsCollection.deleteOne(query);
+            return new JSONObject();
+
+        } catch(Exception e) {
+            System.out.println("Failed to update a document");
             return null;
         }
     }
 
 
-    public Object deleteCar(String id) {
-        BasicDBObject query = new BasicDBObject();
-        query.put("_id", new ObjectId(id));
-
-        carsCollection.deleteOne(query);
-
-        return new JSONObject();
-    }
-
-
-    public Object deleteAllCars() {
-
-        carsCollection.deleteMany(new BasicDBObject());
-
-        return new JSONObject();
-    }
+//    public Object deleteAllCars() {
+//
+//        carsCollection.deleteMany(new BasicDBObject());
+//        return new JSONObject();
+//    }
 
     private Car convertDocumentToCar(Document item) {
         Car car = new Car(
-                item.getString("ownerId"),
                 item.getString("carManufacturer"),
                 item.getString("carModel"),
                 item.getString("carType"),
@@ -183,9 +216,9 @@ public class CarsService {
     }
 
     private Document convertCarToDocument(Car car){
-        Document doc = new Document("ownerId", car.getOwnerId())
-                .append("carManufacturer", car.getCarManufacturer())
+        Document doc = new Document("carManufacturer", car.getCarManufacturer())
                 .append("carModel", car.getCarModel())
+                .append("ownerId", car.getOwnerId())
                 .append("carType", car.getCarType())
                 .append("carYear", car.getCarYear())
                 .append("carRegistration", car.getCarRegistration())
@@ -195,7 +228,7 @@ public class CarsService {
     }
 
     private Car convertJsonToCar(JSONObject json){
-        Car car = new Car( json.getString("ownerId"),
+        Car car = new Car(
                 json.getString("carManufacturer"),
                 json.getString("carModel"),
                 json.getString("carType"),

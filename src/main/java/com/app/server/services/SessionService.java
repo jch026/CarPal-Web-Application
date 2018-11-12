@@ -23,6 +23,8 @@ import org.json.JSONObject;
 public class SessionService {
 
     private static SessionService self;
+    private static RentersService rentersService;
+    private static OwnersService ownersService;
     private ObjectWriter ow;
     private MongoCollection<Document> rentersCollection = null;
     private MongoCollection<Document> ownersCollection = null;
@@ -31,6 +33,8 @@ public class SessionService {
         this.rentersCollection = MongoPool.getInstance().getCollection("renters");
         this.ownersCollection = MongoPool.getInstance().getCollection("owners");
         ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        rentersService = RentersService.getInstance();
+        ownersService = OwnersService.getInstance();
 
     }
 
@@ -40,39 +44,134 @@ public class SessionService {
         return self;
     }
 
-    public Session create(Object request) {
+    public Session createRenterSession(Object request) {
 
         JSONObject json = null;
         try {
             json = new JSONObject(ow.writeValueAsString(request));
-            if (!json.has("emailAddress"))
+            if (!json.has("email"))
                 throw new APPBadRequestException(55, "missing emailAddress");
             if (!json.has("password"))
                 throw new APPBadRequestException(55, "missing password");
             BasicDBObject query = new BasicDBObject();
 
-            query.put("emailAddress", json.getString("emailAddress"));
+            query.put("email", json.getString("email"));
             query.put("password", APPCrypt.encrypt(json.getString("password")));
 
-            try {
-                Document item = rentersCollection.find(query).first();
-                if (item == null) {
+            Document item = rentersCollection.find(query).first();
+
+            if (item == null) {
                     throw new APPNotFoundException(0, "No user found matching credentials");
-                }
+            }
+            Renter renter = rentersService.convertDocumentToRenter(item);
+            renter.setId(item.getObjectId("_id").toString());
+            return new Session(renter);
+        }
+        catch (JsonProcessingException e) {
+            throw new APPBadRequestException(33, e.getMessage());
+        }
+        catch (APPBadRequestException e) {
+            throw e;
+        }
+        catch (APPNotFoundException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new APPInternalServerException(0, e.getMessage());
+        }
+    }
 
-                Renter renter = convertDocumentToRenter(item);
+    public Session createOwnerSession(Object request) {
+        JSONObject json = null;
+        try {
+            json = new JSONObject(ow.writeValueAsString(request));
+            if (!json.has("email"))
+                throw new APPBadRequestException(55, "missing emailAddress");
+            if (!json.has("password"))
+                throw new APPBadRequestException(55, "missing password");
+            BasicDBObject query = new BasicDBObject();
 
-                renter.setId(item.getObjectId("_id").toString());
+            query.put("email", json.getString("email"));
+            query.put("password", APPCrypt.encrypt(json.getString("password")));
+
+            Document item = ownersCollection.find(query).first();
+            if (item == null) {
+               throw new APPNotFoundException(0, "No user found matching credentials");
+            }
+            Owner owner = ownersService.convertDocumentToOwner(item);
+            owner.setId(item.getObjectId("_id").toString());
+            return new Session(owner);
+        }
+        catch (JsonProcessingException e) {
+            throw new APPBadRequestException(33, e.getMessage());
+        }
+        catch (APPBadRequestException e) {
+            throw e;
+        }
+        catch (APPNotFoundException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new APPInternalServerException(0, e.getMessage());
+        }
+    }
+
+    public Session renterSignUp(Object request) {
+        JSONObject json = null;
+        try {
+            json = new JSONObject(ow.writeValueAsString(request));
+            if (!json.has("email"))
+                throw new APPBadRequestException(55, "missing emailAddress");
+            if (!json.has("password"))
+                throw new APPBadRequestException(55, "missing password");
+            BasicDBObject query = new BasicDBObject();
+
+            query.put("email", json.getString("email"));
+            query.put("password", APPCrypt.encrypt(json.getString("password")));
+
+            Document item = rentersCollection.find(query).first();
+
+            if (item != null) {
+                throw new APPNotFoundException(100, "Renter already exists");
+            } else {
+                Renter renter = rentersService.create(request);
                 return new Session(renter);
-            }catch(Exception e){
-                Document item = ownersCollection.find(query).first();
-                if (item == null) {
-                    throw new APPNotFoundException(0, "No user found matching credentials");
-                }
+            }
+        }
+        catch (JsonProcessingException e) {
+            throw new APPBadRequestException(33, e.getMessage());
+        }
+        catch (APPBadRequestException e) {
+            throw e;
+        }
+        catch (APPNotFoundException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new APPInternalServerException(0, e.getMessage());
+        }
+    }
 
-                Owner owner = convertDocumentToOwner(item);
+    public Session ownerSignUp(Object request) {
 
-                owner.setId(item.getObjectId("_id").toString());
+        JSONObject json = null;
+        try {
+            json = new JSONObject(ow.writeValueAsString(request));
+            if (!json.has("email"))
+                throw new APPBadRequestException(55, "missing emailAddress");
+            if (!json.has("password"))
+                throw new APPBadRequestException(55, "missing password");
+            BasicDBObject query = new BasicDBObject();
+
+            query.put("email", json.getString("email"));
+            query.put("password", APPCrypt.encrypt(json.getString("password")));
+
+            Document item = ownersCollection.find(query).first();
+
+            if (item != null) {
+                throw new APPNotFoundException(100, "Owner already exists");
+            } else {
+                Owner owner = ownersService.create(request);
                 return new Session(owner);
             }
         }
@@ -90,33 +189,4 @@ public class SessionService {
         }
     }
 
-    private Owner convertDocumentToOwner(Document item) {
-        Owner owner = new Owner(
-                item.getString("firstName"),
-                item.getString("lastName"),
-                item.getString("phoneNumber"),
-                item.getString("username"),
-                item.getString("password"),
-                item.getString("email"),
-                item.getString("license"),
-                item.getString("accountNumber")
-        );
-        owner.setId(item.getObjectId("_id").toString());
-        return owner;
-    }
-
-    private Renter convertDocumentToRenter(Document item) {
-        Renter renter = new Renter(
-                item.getString("firstName"),
-                item.getString("lastName"),
-                item.getString("username"),
-                item.getString("password"),
-                item.getString("phoneno"),
-                item.getString("license"),
-                item.getString("email")
-        );
-        renter.setId(item.getObjectId("_id").toString());
-        return renter;
-    }
-    
 } // end of main()

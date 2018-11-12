@@ -31,12 +31,42 @@ public class SessionHttpService {
     }
 
     @POST
+    @Path("/renters/login")
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse create(Object request) {
+    public APPResponse renterSignIn(Object request) {
 
-        return new APPResponse(service.create(request));
+        return new APPResponse(service.createRenterSession(request));
     }
+
+    @POST
+    @Path("/renters/signup")
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse renterSignUp(Object request) {
+
+        return new APPResponse(service.renterSignUp(request));
+    }
+
+    @POST
+    @Path("/owners/login")
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse ownerSignIn(Object request) {
+
+        return new APPResponse(service.createOwnerSession(request));
+    }
+
+
+    @POST
+    @Path("/owners/signup")
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse ownerSignUp(Object request) {
+
+        return new APPResponse(service.ownerSignUp(request));
+    }
+
 
 
 }

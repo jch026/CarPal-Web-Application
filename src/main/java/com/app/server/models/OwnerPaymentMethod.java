@@ -24,8 +24,7 @@ public class OwnerPaymentMethod {
     String bankAccount;
     String bookingId;
 
-    public OwnerPaymentMethod(String ownerId, String bankAccount, String bookingId) {
-        this.ownerId = ownerId;
+    public OwnerPaymentMethod(String bankAccount, String bookingId) {
         this.bankAccount = bankAccount;
         this.bookingId = bookingId;
     }

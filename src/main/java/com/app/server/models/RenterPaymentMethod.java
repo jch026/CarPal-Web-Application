@@ -26,11 +26,10 @@ public class RenterPaymentMethod {
     String billingAddress;
     String creditCardNo;
 
-    public RenterPaymentMethod(String paymentMode, String billingAddress, String creditCardNo, String renterId) {
+    public RenterPaymentMethod(String paymentMode, String billingAddress, String creditCardNo) {
         this.paymentMode = paymentMode;
         this.billingAddress = billingAddress;
         this.creditCardNo = creditCardNo;
-        this.renterId = renterId;
     }
     public void setId(String id) {
         this.id = id;

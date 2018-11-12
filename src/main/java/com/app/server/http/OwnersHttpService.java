@@ -20,6 +20,8 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -60,12 +62,12 @@ public class OwnersHttpService {
     @GET
     @Path("{id}")
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse getOne(@PathParam("id") String id) {
+    public APPResponse getOne(@Context HttpHeaders headers, @PathParam("id") String id) {
         try{
-            Owner o = service.getOne(id);
+            Owner o = service.getOne(id, headers);
             if (o == null)
                 throw new APPNotFoundException(25, "Owner not found");
-            return new APPResponse(service.getOne(id));
+            return new APPResponse(service.getOne(id, headers));
         }
         catch(IllegalArgumentException e) {
             throw new APPNotFoundException(25, "Owner not found");
@@ -74,25 +76,26 @@ public class OwnersHttpService {
             throw new APPInternalServerException(50, "Something happened. Come back later.");
         }
     }
-
+/*
     @POST
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
     public APPResponse create(Object request) {
         return new APPResponse(service.create(request));
     }
+*/
 
     @PATCH
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public APPResponse update(@PathParam("id") String id, Object request){
+    public APPResponse update(@Context HttpHeaders headers, @PathParam("id") String id, Object request){
 
-        return new APPResponse(service.update(id,request));
+        return new APPResponse(service.update(id, request, headers));
 
     }
 
-    @DELETE
+/*    @DELETE
     @Path("{id}")
     @Produces({ MediaType.APPLICATION_JSON})
     public APPResponse delete(@PathParam("id") String id) {
@@ -105,16 +108,16 @@ public class OwnersHttpService {
     public APPResponse delete() {
 
         return new APPResponse(service.deleteAll());
-    }
+    }*/
 
     /*************Subresource Methods for Car******************/
 
     @GET
     @Path("{id}/cars")
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse getRenterPayment(@PathParam("id") String id) {
+    public APPResponse getRenterPayment(@Context HttpHeaders headers, @PathParam("id") String id) {
         try {
-            ArrayList<Car> cs = serviceCS.getAllCars(id);
+            ArrayList<Car> cs = serviceCS.getAllCars(id, headers);
             if (cs == null)
                 throw new APPNotFoundException(57,"RenterPaymentMethod not found");
             return new APPResponse(cs);
@@ -131,9 +134,9 @@ public class OwnersHttpService {
     @GET
     @Path("{id}/cars/{idtwo}")
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse getOneCar(@PathParam("idtwo") String id) {
+    public APPResponse getOneCar(@Context HttpHeaders headers,@PathParam("idtwo") String carId, @PathParam("id") String mainId) {
         try {
-            Car cs = serviceCS.getOneCar(id);
+            Car cs = serviceCS.getOneCar(carId,mainId,headers);
             if (cs == null)
                 throw new APPNotFoundException(57,"RenterPaymentMethod not found");
             return new APPResponse(cs);
@@ -151,28 +154,28 @@ public class OwnersHttpService {
     @Path("{id}/cars")
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse createCar(Object request, @PathParam("id") String ownerId) {
-        return new APPResponse(serviceCS.createCar(request, ownerId));
+    public APPResponse createCar(@Context HttpHeaders headers,Object request, @PathParam("id") String ownerId) {
+        return new APPResponse(serviceCS.createCar(headers,request, ownerId));
     }
 
     @PATCH
     @Path("{id}/cars/{idtwo}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public APPResponse updateCar(@PathParam("idtwo") String idtwo, Object request){
+    public APPResponse updateCar(@Context HttpHeaders headers,@PathParam("id") String mainId,@PathParam("idtwo") String carId, Object request){
 
-        return new APPResponse(serviceCS.updateCar(idtwo,request));
+        return new APPResponse(serviceCS.updateCar(headers,mainId,carId,request));
 
     }
 
 
-//    @DELETE
-//    @Path("{id}")
-//    @Produces({ MediaType.APPLICATION_JSON})
-//    public APPResponse deleteCar(@PathParam("id") String id) {
-//
-//        return new APPResponse(serviceCS.deleteCar(id));
-//    }
+    @DELETE
+    @Path("{id}/cars/{idtwo}")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse deleteCar(@Context HttpHeaders headers, @PathParam("id") String mainId, @PathParam("idtwo") String carId) {
+
+        return new APPResponse(serviceCS.deleteCar(headers, mainId,carId));
+    }
 
 //    @DELETE
 //    @Produces({ MediaType.APPLICATION_JSON})
@@ -188,9 +191,9 @@ public class OwnersHttpService {
     @GET
     @Path("{id}/ownerPayment")
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse getOwnerPayment(@PathParam("id") String id) {
+    public APPResponse getOwnerPayment(@Context HttpHeaders headers, @PathParam("id") String id) {
         try {
-            ArrayList<OwnerPaymentMethod> pm = servicePM.getAllOwnerPayments(id);
+            ArrayList<OwnerPaymentMethod> pm = servicePM.getAllOwnerPayments(headers, id);
             if (pm == null)
                 throw new APPNotFoundException(57,"OwnerPaymentMethod not found");
             return new APPResponse(pm);
@@ -207,9 +210,9 @@ public class OwnersHttpService {
     @GET
     @Path("{id}/ownerPayment/{ownerPaymentId}")
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse getOnePaymentMethod(@PathParam("ownerPaymentId") String id) {
+    public APPResponse getOnePaymentMethod(@Context HttpHeaders headers, @PathParam("id") String mainId, @PathParam("ownerPaymentId") String opId) {
         try {
-            OwnerPaymentMethod pm = servicePM.getOneOwnerPayment(id);
+            OwnerPaymentMethod pm = servicePM.getOneOwnerPayment(headers, mainId, opId);
             if (pm == null)
                 throw new APPNotFoundException(57,"OwnerPaymentMethod not found");
             return new APPResponse(pm);
@@ -227,17 +230,17 @@ public class OwnersHttpService {
     @Path("{id}/ownerPayment")
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse createOwnerPayment(Object request, @PathParam("id") String ownerId) {
-        return new APPResponse(servicePM.createOwnerPayment(request, ownerId));
+    public APPResponse createOwnerPayment(@Context HttpHeaders headers, Object request, @PathParam("id") String ownerId) {
+        return new APPResponse(servicePM.createOwnerPayment(headers, request, ownerId));
     }
 
     @PATCH
     @Path("{id}/ownerPayment/{ownerPaymentId}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public APPResponse updateOwnerPayment(@PathParam("ownerPaymentId") String ownerPaymentId, Object request){
+    public APPResponse updateOwnerPayment(@Context HttpHeaders headers, @PathParam("id") String mainId,@PathParam("ownerPaymentId") String opId, Object request){
 
-        return new APPResponse(servicePM.updateOwnerPayment(ownerPaymentId,request));
+        return new APPResponse(servicePM.updateOwnerPayment(headers, mainId, opId,request));
 
     }
 
@@ -246,9 +249,9 @@ public class OwnersHttpService {
     @GET
     @Path("{id}/bookings")
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse getBookings(@PathParam("id") String id) {
+    public APPResponse getBookings(@Context HttpHeaders headers, @PathParam("id") String id) {
         try {
-            ArrayList<Booking> rp = serviceBooking.getAllBookings(id);
+            ArrayList<Booking> rp = serviceBooking.getAllBookings(id,headers);
             if (rp == null)
                 throw new APPNotFoundException(57,"Bookings not found");
             return new APPResponse(rp);
@@ -265,9 +268,9 @@ public class OwnersHttpService {
     @GET
     @Path("{id}/bookings/{bookingId}")
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse getOneBooking(@PathParam("bookingId") String id) {
+    public APPResponse getOneBooking(@Context HttpHeaders headers,@PathParam("bookingId") String bookingId, @PathParam("id") String mainId) {
         try {
-            Booking rp = serviceBooking.getOne(id);
+            Booking rp = serviceBooking.getOne(mainId,bookingId, headers);
             if (rp == null)
                 throw new APPNotFoundException(57,"Booking not found");
             return new APPResponse(rp);
