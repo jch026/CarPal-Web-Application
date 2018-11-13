@@ -44,9 +44,7 @@ public class Booking {
 
 
 
-    public Booking(String ownerId, String renterId, String carId, String costOfCar, String date, String startTime, String endTime, String pickupAddress, String status) {
-        this.ownerId = ownerId;
-        this.renterId = renterId;
+    public Booking( String carId, String costOfCar, String date, String startTime, String endTime, String pickupAddress, String status) {
         this.carId = carId;
         this.costOfCar = costOfCar;
         this.date = date;

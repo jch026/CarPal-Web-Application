@@ -100,18 +100,19 @@ public class BookingService {
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
             String carId = json.getString("carId");
+            CarsService cs = CarsService.getInstance();
+            Car car = cs.getOneCar(carId);
+            String ownerId = car.getOwnerId();
+
             Booking booking = convertJsonToBooking(json);
+            booking.setOwnerId(ownerId);
+            booking.setCarId(carId);
+            booking.setRenterId(renterId);
 
             Document doc = convertBookingToDocument(booking);
             bookingCollection.insertOne(doc);
             ObjectId id = (ObjectId)doc.get( "_id" );
             booking.setId(id.toString());
-            booking.setRenterId(renterId);
-            CarsService cs = CarsService.getInstance();
-            Car car = cs.getOneCar(carId);
-            String ownerId = car.getOwnerId();
-            booking.setOwnerId(ownerId);
-            booking.setCarId(carId);
             return booking;
         } catch(Exception e) {
             System.out.println("Failed to create a document");
@@ -170,8 +171,6 @@ public class BookingService {
 
     private Booking convertDocumentToBooking(Document item) {
         Booking booking = new Booking(
-                item.getString("ownerId"),
-                item.getString("renterId"),
                 item.getString("carId"),
                 item.getString("costOfCar"),
                 item.getString("pickupAddress"),
@@ -180,6 +179,8 @@ public class BookingService {
                 item.getString("endTime"),
                 item.getString("date"));
         booking.setId(item.getObjectId("_id").toString());
+        booking.setOwnerId(item.getString("ownerId"));
+        booking.setRenterId(item.getString("renterId"));
         return booking;
     }
 
@@ -197,8 +198,7 @@ public class BookingService {
     }
 
     private Booking convertJsonToBooking(JSONObject json){
-        Booking booking = new Booking( json.getString("ownerId"),
-                json.getString("renterId"),
+        Booking booking = new Booking(
                 json.getString("carId"),
                 json.getString("costOfCar"),
                 json.getString("date"),

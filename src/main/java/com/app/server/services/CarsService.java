@@ -212,6 +212,7 @@ public class CarsService {
                 item.getString("carLocation")
         );
         car.setId(item.getObjectId("_id").toString());
+        car.setOwnerId(item.getString("ownerId"));
         return car;
     }
 
