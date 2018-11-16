@@ -41,8 +41,17 @@ public class CarsHttpService {
     @GET
     @Produces({ MediaType.APPLICATION_JSON})
     public APPResponse getAll() {
+
         return new APPResponse(service.getAll());
     }
+
+/*
+    @GET
+    @Path("{id}/reviews")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse getReviews() {
+        return new APPResponse(service.getAll());
+    }*/
 
     @GET
     @Path("{id}")

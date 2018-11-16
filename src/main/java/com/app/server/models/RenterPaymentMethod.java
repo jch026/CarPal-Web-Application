@@ -35,6 +35,6 @@ public class RenterPaymentMethod {
         this.id = id;
     }
     public void setRenterId(String renterId) {
-        this.renterId = id;
+        this.renterId = renterId;
     }
 }

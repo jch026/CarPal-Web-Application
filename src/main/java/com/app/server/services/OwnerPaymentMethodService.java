@@ -2,6 +2,7 @@ package com.app.server.services;
 
 import com.app.server.http.exceptions.APPNotFoundException;
 import com.app.server.http.utils.APPResponse;
+import com.app.server.models.Booking;
 import com.app.server.models.OwnerPaymentMethod;
 import com.app.server.util.MongoPool;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,12 +28,14 @@ public class OwnerPaymentMethodService {
 
     private static OwnerPaymentMethodService self;
     private static OwnersService ownersService;
+    private static NotificationService serviceN;
     private ObjectWriter ow;
     private MongoCollection<Document> ownerPaymentCollection = null;
 
     private OwnerPaymentMethodService() {
         this.ownerPaymentCollection = MongoPool.getInstance().getCollection("ownerPayment");
         ownersService = OwnersService.getInstance();
+        serviceN = NotificationService.getInstance();
         ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
     }
@@ -100,7 +103,7 @@ public class OwnerPaymentMethodService {
         try {
             ownersService.checkAuthentication(headers, mainId);
             BasicDBObject query = new BasicDBObject();
-            query.put("ownerId", opId);
+            query.put("_id", new ObjectId(opId));
 
             Document item = ownerPaymentCollection.find(query).first();
             if (item == null) {
@@ -121,13 +124,16 @@ public class OwnerPaymentMethodService {
             json = new JSONObject(ow.writeValueAsString(request));
             String bookingId = json.getString("bookingId");
             OwnerPaymentMethod ownerPayment = convertJsonToOwnerPayment(json);
+            ownerPayment.setOwnerId(ownerId);
             Document doc = convertOwnerPaymentToDocument(ownerPayment);
             ownerPaymentCollection.insertOne(doc);
             ObjectId id = (ObjectId)doc.get( "_id" );
             ownerPayment.setId(id.toString());
-            ownerPayment.setOwnerId(ownerId);
-            ownerPayment.setBookingId(bookingId);
+            //ownerPayment.setBookingId(bookingId);
+            serviceN.addNotification(ownerId,"Created owner payment");
             return ownerPayment;
+
+
         } catch(Exception e) {
             System.out.println("Failed to create a document");
             return null;
@@ -183,12 +189,14 @@ public class OwnerPaymentMethodService {
                 item.getString("bookingId")
         );
         ownerPayment.setId(item.getObjectId("_id").toString());
+        ownerPayment.setId(item.getString("ownerId"));
         return ownerPayment;
     }
 
     private Document convertOwnerPaymentToDocument(OwnerPaymentMethod ownerPayment){
         Document doc = new Document("bankAccount", ownerPayment.getBankAccount())
-                .append("bookingId", ownerPayment.getBookingId());
+                .append("bookingId", ownerPayment.getBookingId())
+                .append("ownerId",ownerPayment.getOwnerId());
         return doc;
     }
 

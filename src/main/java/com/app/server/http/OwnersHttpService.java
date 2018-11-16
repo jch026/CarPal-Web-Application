@@ -10,10 +10,7 @@ import com.app.server.models.Owner;
 import com.app.server.models.Car;
 import com.app.server.models.OwnerPaymentMethod;
 
-import com.app.server.services.BookingService;
-import com.app.server.services.OwnersService;
-import com.app.server.services.CarsService;
-import com.app.server.services.OwnerPaymentMethodService;
+import com.app.server.services.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -33,6 +30,7 @@ public class OwnersHttpService {
     private CarsService serviceCS;
     private OwnerPaymentMethodService servicePM;
     private BookingService serviceBooking;
+    private NotificationService serviceN;
     private ObjectWriter ow;
 
 
@@ -41,6 +39,7 @@ public class OwnersHttpService {
         serviceCS = CarsService.getInstance();
         servicePM = OwnerPaymentMethodService.getInstance();
         serviceBooking = BookingService.getInstance();
+        serviceN = NotificationService.getInstance();
         ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
     }
@@ -282,6 +281,14 @@ public class OwnersHttpService {
             throw new APPInternalServerException(0,"Something happened. Come back later.");
         }
 
+    }
+
+    @GET
+    @Path("{id}/notifications")
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse getNotificationsforUser(@Context HttpHeaders headers, @PathParam("id") String renterId, @QueryParam("offset") int offset, @DefaultValue("20") @QueryParam("count") int count) {
+        return new APPResponse(serviceN.getNotifications(headers, renterId, offset, count));
     }
 
 

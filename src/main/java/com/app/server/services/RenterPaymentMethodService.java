@@ -30,11 +30,13 @@ public class RenterPaymentMethodService {
     private static RentersService renterService;
     private ObjectWriter ow;
     private MongoCollection<Document> renterPaymentCollection = null;
+    private static NotificationService serviceN;
 
     private RenterPaymentMethodService() {
         this.renterPaymentCollection = MongoPool.getInstance().getCollection("renterPayment");
         ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         renterService = RentersService.getInstance();
+        serviceN = NotificationService.getInstance();
     }
 
     public static RenterPaymentMethodService getInstance(){
@@ -118,11 +120,12 @@ public class RenterPaymentMethodService {
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
             RenterPaymentMethod renterPayment = convertJsonToRenterPayment(json);
+            renterPayment.setRenterId(renterId);
             Document doc = convertRenterPaymentToDocument(renterPayment);
             renterPaymentCollection.insertOne(doc);
             ObjectId id = (ObjectId)doc.get( "_id" );
             renterPayment.setId(id.toString());
-            renterPayment.setRenterId(renterId);
+            serviceN.addNotification(renterId,"Created renter Payment");
             return renterPayment;
 
         } catch(Exception e) {
@@ -184,13 +187,15 @@ public class RenterPaymentMethodService {
                 item.getString("creditCardNo")
         );
         renterPayment.setId(item.getObjectId("_id").toString());
+        renterPayment.setId(item.getString("renterId"));
         return renterPayment;
     }
 
     private Document convertRenterPaymentToDocument(RenterPaymentMethod renterPayment){
         Document doc = new Document("paymentMode", renterPayment.getPaymentMode())
                 .append("billingAddress", renterPayment.getBillingAddress())
-                .append("creditCardNo", renterPayment.getCreditCardNo());
+                .append("creditCardNo", renterPayment.getCreditCardNo())
+                .append("renterId", renterPayment.getRenterId());
         return doc;
     }
 

@@ -7,9 +7,7 @@ import com.app.server.http.utils.PATCH;
 import com.app.server.models.Booking;
 import com.app.server.models.Renter;
 import com.app.server.models.RenterPaymentMethod;
-import com.app.server.services.BookingService;
-import com.app.server.services.RenterPaymentMethodService;
-import com.app.server.services.RentersService;
+import com.app.server.services.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
@@ -30,12 +28,16 @@ public class RentersHttpService {
     private ObjectWriter ow;
     private RenterPaymentMethodService serviceRP;
     private BookingService serviceBooking;
+    private NotificationService serviceN;
+    private ReviewService serviceR;
 
 
     public RentersHttpService() {
         service = RentersService.getInstance();
         serviceRP = RenterPaymentMethodService.getInstance();
         serviceBooking = BookingService.getInstance();
+        serviceN = NotificationService.getInstance();
+        serviceR = ReviewService.getInstance();
         ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
     }
@@ -206,6 +208,33 @@ public class RentersHttpService {
 
     }
 
+    /************Subresource Notifications********************/
+
+    @GET
+    @Path("{id}/notifications")
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse getNotificationsforUser(@Context HttpHeaders headers, @PathParam("id") String renterId, @QueryParam("offset") int offset, @DefaultValue("20") @QueryParam("count") int count) {
+        return new APPResponse(serviceN.getNotifications(headers,renterId, offset, count));
+    }
+
+    /************Subresource Reviews********************/
+
+    @GET
+    @Path("{id}/bookings/{bookingId}/reviews")
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse getReviewsforUser(@Context HttpHeaders headers, @PathParam("id") String renterId, @PathParam("bookingId") String bookingId) {
+        return new APPResponse(serviceR.getAllReviews(headers, renterId, bookingId));
+    }
+
+    @POST
+    @Path("{id}/bookings/{bookingId}/reviews")
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse psotReview(@Context HttpHeaders headers, Object request, @PathParam("id") String renterId, @PathParam("bookingId") String bookingId) {
+        return new APPResponse(serviceR.createReview(headers, request, renterId, bookingId));
+    }
     /*@DELETE
     @Path("{id}")
     @Produces({ MediaType.APPLICATION_JSON})

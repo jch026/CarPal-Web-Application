@@ -52,7 +52,7 @@ public class BookingService {
         BasicDBObject query = new BasicDBObject();
         try{
             renterService.checkAuthentication(headers,id);
-            query.put("renterId", new ObjectId(id));
+            query.put("renterId", id);
             FindIterable<Document> item = bookingCollection.find(query);
             for (Document document : item) {
                 Booking booking = convertDocumentToBooking(document);
@@ -62,7 +62,7 @@ public class BookingService {
         }catch (Exception e) {
             try{
                 renterService.checkAuthentication(headers,id);
-                query.put("ownerId", new ObjectId(id));
+                query.put("ownerId", id);
                 FindIterable<Document> item = bookingCollection.find(query);
                 for (Document document : item) {
                     Booking booking = convertDocumentToBooking(document);

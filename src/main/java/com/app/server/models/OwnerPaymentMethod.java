@@ -32,10 +32,10 @@ public class OwnerPaymentMethod {
         this.id = id;
     }
     public void setOwnerId(String ownerId) {
-        this.ownerId = id;
+        this.ownerId = ownerId;
     }
     public void setBookingId(String bookingId) {
-        this.bookingId = id;
+        this.bookingId = bookingId;
     }
 
 }

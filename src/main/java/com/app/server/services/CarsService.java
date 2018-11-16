@@ -201,7 +201,7 @@ public class CarsService {
 //        return new JSONObject();
 //    }
 
-    private Car convertDocumentToCar(Document item) {
+    public Car convertDocumentToCar(Document item) {
         Car car = new Car(
                 item.getString("carManufacturer"),
                 item.getString("carModel"),

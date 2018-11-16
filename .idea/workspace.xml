@@ -7,17 +7,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b3c5e39-9cb9-4aa4-bb65-d5e02980f1a5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/server/http/LocationHttpService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/server/http/NotificationsHttpService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/server/http/ReviewHttpService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/server/models/Location.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/server/models/Notification.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/server/models/Review.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/server/services/LocationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/server/services/NotificationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/server/services/ReviewService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/libs/appbase.war" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/appbase.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/models/Booking.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/models/Booking.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/services/BookingService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/services/BookingService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/http/CarsHttpService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/http/CarsHttpService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/http/OwnersHttpService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/http/OwnersHttpService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/http/RentersHttpService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/http/RentersHttpService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/models/OwnerPaymentMethod.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/models/OwnerPaymentMethod.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/models/RenterPaymentMethod.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/models/RenterPaymentMethod.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/services/CarsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/services/CarsService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/app/server/models/Booking.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/app/server/models/Booking.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/app/server/services/BookingService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/app/server/services/BookingService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/services/OwnerPaymentMethodService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/services/OwnerPaymentMethodService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/services/RenterPaymentMethodService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/exploded/appbase.war/WEB-INF/classes/com/app/server/services/RenterPaymentMethodService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/app/server/http/CarsHttpService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/app/server/http/CarsHttpService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/app/server/http/OwnersHttpService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/app/server/http/OwnersHttpService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/app/server/http/RentersHttpService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/app/server/http/RentersHttpService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/app/server/models/OwnerPaymentMethod.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/app/server/models/OwnerPaymentMethod.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/app/server/models/RenterPaymentMethod.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/app/server/models/RenterPaymentMethod.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/app/server/services/CarsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/app/server/services/CarsService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/server/models/Booking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/server/models/Booking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/app/server/services/OwnerPaymentMethodService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/app/server/services/OwnerPaymentMethodService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/app/server/services/RenterPaymentMethodService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/app/server/services/RenterPaymentMethodService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/server/http/CarsHttpService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/server/http/CarsHttpService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/server/http/OwnersHttpService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/server/http/OwnersHttpService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/server/http/RentersHttpService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/server/http/RentersHttpService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/server/models/OwnerPaymentMethod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/server/models/OwnerPaymentMethod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/server/models/RenterPaymentMethod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/server/models/RenterPaymentMethod.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/server/services/BookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/server/services/BookingService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/server/services/CarsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/server/services/CarsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/server/services/OwnerPaymentMethodService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/server/services/OwnerPaymentMethodService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/server/services/RenterPaymentMethodService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/server/services/RenterPaymentMethodService.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -95,33 +120,34 @@
     <session id="-784461164">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.open.time.29" value="1" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.opened" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="4385" />
+          <entry key="java" value="7730" />
           <entry key="js" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="4385" />
+          <entry key="JAVA" value="7730" />
           <entry key="JavaScript" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="html" value="2" />
-          <entry key="java" value="67" />
+          <entry key="java" value="129" />
           <entry key="js" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="HTML" value="2" />
-          <entry key="JAVA" value="67" />
+          <entry key="JAVA" value="129" />
           <entry key="JavaScript" value="1" />
         </counts>
       </usages-collector>
@@ -133,49 +159,22 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/OwnersHttpService.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/Review.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="157" selection-start-line="157" selection-end-line="157" />
+            <state relative-caret-position="225">
+              <caret line="15" column="18" lean-forward="true" selection-start-line="15" selection-end-line="18" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/CarsService.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/ReviewService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="209" column="50" lean-forward="true" selection-start-line="209" selection-start-column="50" selection-end-line="209" selection-end-column="50" />
+            <state relative-caret-position="264">
+              <caret line="75" column="62" selection-start-line="75" selection-start-column="62" selection-end-line="75" selection-end-column="62" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/Car.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="49" column="35" lean-forward="true" selection-start-line="49" selection-start-column="35" selection-end-line="49" selection-end-column="35" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/Booking.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="46" column="137" selection-start-line="46" selection-start-column="137" selection-end-line="46" selection-end-column="137" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/Renter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="34" column="20" lean-forward="true" selection-start-line="34" selection-start-column="20" selection-end-line="34" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -183,8 +182,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/BookingService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
-              <caret line="115" selection-start-line="115" selection-end-line="115" />
+            <state relative-caret-position="178">
+              <caret line="87" column="28" lean-forward="true" selection-start-line="87" selection-start-column="28" selection-end-line="87" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -192,44 +191,63 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/NotificationService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="20">
+              <caret line="74" column="51" selection-start-line="74" selection-start-column="49" selection-end-line="74" selection-end-column="51" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/ReviewHttpService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="385">
+              <caret line="39" column="39" selection-start-line="39" selection-start-column="39" selection-end-line="39" selection-end-column="39" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/NotificationsHttpService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="387">
+              <caret line="49" column="51" lean-forward="true" selection-start-line="49" selection-start-column="51" selection-end-line="49" selection-end-column="51" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/LocationHttpService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="495">
+              <caret line="33" column="14" lean-forward="true" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1101#1102#0" expanded="true" />
+                <element signature="e#1145#1146#0" expanded="true" />
+                <element signature="e#1480#1481#0" expanded="true" />
+                <element signature="e#1543#1544#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/RentersHttpService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="170" column="9" lean-forward="true" selection-start-line="170" selection-start-column="9" selection-end-line="170" selection-end-column="9" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/SessionService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-483">
-              <caret line="118" column="19" selection-start-line="118" selection-start-column="19" selection-end-line="118" selection-end-column="19" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/SessionHttpService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="29" column="37" lean-forward="true" selection-start-line="29" selection-start-column="37" selection-end-line="29" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/RentersService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="173" selection-start-line="173" selection-end-line="173" />
+            <state relative-caret-position="300">
+              <caret line="227" column="47" lean-forward="true" selection-start-line="227" selection-start-column="47" selection-end-line="227" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -242,8 +260,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="JavaScript File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -256,6 +274,10 @@
       <find>cat</find>
       <find>convertDocumentToCar</find>
       <find>convertDocumentToBooking</find>
+      <find>convertOwnerPaymentToDocument</find>
+      <find>getAll</find>
+      <find>99</find>
+      <find>null</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -566,27 +588,38 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/server/http/CarsHttpService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/server/http/utils/APPCrypt.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/server/models/Session.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/server/models/Owner.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/server/models/Renter.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/server/http/SessionHttpService.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/app.js" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/server/services/RentersService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/server/services/SessionService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/server/services/OwnersService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/server/http/OwnersHttpService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/server/http/RentersHttpService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/server/http/RenterPaymentMethodHttpService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/server/models/OwnerPaymentMethod.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/server/models/Car.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/server/services/OwnerPaymentMethodService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/server/models/RenterPaymentMethod.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/server/services/RenterPaymentMethodService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/server/services/CarsService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/server/models/Booking.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/models/OwnerPaymentMethod.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/models/RenterPaymentMethod.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/models/Notification.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/services/RentersService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/http/NotificationsHttpService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/services/NotificationService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/http/OwnersHttpService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/services/RenterPaymentMethodService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/services/TransactionService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/services/OwnerPaymentMethodService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/models/Transaction.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/services/CarsService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/http/LocationHttpService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/http/CarsHttpService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/models/Location.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/services/LocationService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/models/Review.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/http/ReviewHttpService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/server/services/BookingService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/http/RentersHttpService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/server/services/ReviewService.java" />
       </list>
     </option>
   </component>
@@ -609,7 +642,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="797" />
@@ -620,6 +653,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -689,28 +723,6 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="http" type="462c0819:PsiDirectoryNode" />
-              <item name="exceptions" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="appbase" type="b2602c69:ProjectViewProjectNode" />
-              <item name="CarPal-Web-Application" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="http" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="appbase" type="b2602c69:ProjectViewProjectNode" />
-              <item name="CarPal-Web-Application" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="models" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -742,7 +754,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="AndroidView" />
     </panes>
@@ -750,7 +761,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542078074992" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542402985942" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -865,17 +876,18 @@
       <workItem from="1541574353099" duration="921000" />
       <workItem from="1541575404983" duration="8061000" />
       <workItem from="1541627562904" duration="9010000" />
+      <workItem from="1542224813565" duration="26286000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52623000" />
+    <option name="totallyTimeSpent" value="78909000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4989429" visible="true" weight="0.28040057" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4989429" visible="true" weight="0.28397712" />
       <window_info id="Structure" order="1" sideWeight="0.5010571" side_tool="true" weight="0.28040057" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -885,8 +897,8 @@
       <window_info id="Web" order="7" sideWeight="0.5010571" side_tool="true" weight="0.28040057" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32913166" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32907802" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.31325302" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32891566" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.31325302" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -895,7 +907,7 @@
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Application Servers" order="11" weight="0.32960895" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.32907802" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.32891566" />
       <window_info anchor="bottom" id="Build" order="13" weight="0.32913166" />
       <window_info anchor="bottom" id="Java Enterprise" order="14" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -921,46 +933,120 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/RentersService.java</url>
-          <line>166</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/LocationService.java</url>
+          <line>57</line>
           <properties />
-          <option name="timeStamp" value="63" />
+          <option name="timeStamp" value="80" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/RentersService.java</url>
-          <line>169</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/LocationService.java</url>
+          <line>61</line>
           <properties />
-          <option name="timeStamp" value="64" />
+          <option name="timeStamp" value="81" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/RentersService.java</url>
-          <line>170</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/LocationService.java</url>
+          <line>62</line>
           <properties />
-          <option name="timeStamp" value="65" />
+          <option name="timeStamp" value="82" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/RentersService.java</url>
-          <line>171</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/LocationService.java</url>
+          <line>63</line>
           <properties />
-          <option name="timeStamp" value="66" />
+          <option name="timeStamp" value="83" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/LocationService.java</url>
+          <line>64</line>
+          <properties />
+          <option name="timeStamp" value="84" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/LocationService.java</url>
+          <line>69</line>
+          <properties />
+          <option name="timeStamp" value="85" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/http/LocationHttpService.java</url>
+          <line>44</line>
+          <properties />
+          <option name="timeStamp" value="87" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/LocationService.java</url>
+          <line>79</line>
+          <properties />
+          <option name="timeStamp" value="89" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/LocationService.java</url>
+          <line>81</line>
+          <properties />
+          <option name="timeStamp" value="90" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/LocationService.java</url>
+          <line>88</line>
+          <properties />
+          <option name="timeStamp" value="92" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/BookingService.java</url>
-          <line>100</line>
+          <line>51</line>
           <properties />
-          <option name="timeStamp" value="67" />
+          <option name="timeStamp" value="94" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/BookingService.java</url>
-          <line>106</line>
+          <line>53</line>
           <properties />
-          <option name="timeStamp" value="68" />
+          <option name="timeStamp" value="95" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/BookingService.java</url>
-          <line>111</line>
+          <line>56</line>
           <properties />
-          <option name="timeStamp" value="72" />
+          <option name="timeStamp" value="96" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/BookingService.java</url>
+          <line>58</line>
+          <properties />
+          <option name="timeStamp" value="97" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/BookingService.java</url>
+          <line>75</line>
+          <properties />
+          <option name="timeStamp" value="98" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/ReviewService.java</url>
+          <line>126</line>
+          <properties />
+          <option name="timeStamp" value="107" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/ReviewService.java</url>
+          <line>124</line>
+          <properties />
+          <option name="timeStamp" value="108" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/services/ReviewService.java</url>
+          <line>131</line>
+          <properties />
+          <option name="timeStamp" value="109" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/server/http/RentersHttpService.java</url>
+          <line>226</line>
+          <properties class="com.app.server.http.RentersHttpService" method="getReviewsforUser">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="99" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -1014,57 +1100,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jersey.core/jersey-server/2.25/5c52b0e90c204715c2511c83e2ea4ad28613ef6f/jersey-server-2.25-sources.jar!/org/glassfish/jersey/server/model/internal/ResourceMethodInvocationHandlerFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="80" selection-start-line="80" selection-end-line="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/Owner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="41" column="33" selection-start-line="41" selection-start-column="33" selection-end-line="41" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" column="45" lean-forward="true" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/Session.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="27" lean-forward="true" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/RenterPaymentMethodHttpService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="80" column="47" lean-forward="true" selection-start-line="80" selection-start-column="47" selection-end-line="80" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1101#1102#0" expanded="true" />
-            <element signature="e#1145#1146#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/OwnerPaymentMethod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="26" column="30" selection-start-line="26" selection-start-column="30" selection-end-line="26" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/OwnerPaymentMethodService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2715">
-          <caret line="198" column="5" selection-start-line="198" selection-start-column="5" selection-end-line="198" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -1110,13 +1149,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/CarsHttpService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/exceptions/APPExceptionInfo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="148">
@@ -1131,89 +1163,208 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/RenterPaymentMethod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="35" column="5" lean-forward="true" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/RenterPaymentMethodService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="122" column="53" lean-forward="true" selection-start-line="122" selection-start-column="53" selection-end-line="122" selection-end-column="53" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/Renter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="34" column="20" lean-forward="true" selection-start-line="34" selection-start-column="20" selection-end-line="34" selection-end-column="20" />
+        <state relative-caret-position="300">
+          <caret line="34" column="20" selection-start-line="34" selection-start-column="20" selection-end-line="34" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/OwnersHttpService.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/OwnerPaymentMethod.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="157" selection-start-line="157" selection-end-line="157" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/SessionService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-483">
-          <caret line="118" column="19" selection-start-line="118" selection-start-column="19" selection-end-line="118" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="240">
+          <caret line="24" column="21" lean-forward="true" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/SessionHttpService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="29" column="37" lean-forward="true" selection-start-line="29" selection-start-column="37" selection-end-line="29" selection-end-column="37" />
+        <state relative-caret-position="411">
+          <caret line="66" column="44" lean-forward="true" selection-start-line="66" selection-start-column="44" selection-end-line="66" selection-end-column="44" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jersey.core/jersey-server/2.25/5c52b0e90c204715c2511c83e2ea4ad28613ef6f/jersey-server-2.25-sources.jar!/org/glassfish/jersey/server/model/internal/AbstractJavaResourceMethodDispatcher.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/SessionService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="147" selection-start-line="147" selection-end-line="147" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/Car.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="49" column="35" lean-forward="true" selection-start-line="49" selection-start-column="35" selection-end-line="49" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/CarsService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="209" column="50" lean-forward="true" selection-start-line="209" selection-start-column="50" selection-end-line="209" selection-end-column="50" />
+        <state relative-caret-position="36">
+          <caret line="154" column="19" selection-start-line="154" selection-start-column="19" selection-end-line="154" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/Booking.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/RentersService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="46" column="137" selection-start-line="46" selection-start-column="137" selection-end-line="46" selection-end-column="137" />
+        <state relative-caret-position="447">
+          <caret line="162" column="5" selection-start-line="162" selection-start-column="5" selection-end-line="162" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/RentersService.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/Notification.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="173" selection-start-line="173" selection-end-line="173" />
+        <state relative-caret-position="30">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding>
+            <element signature="e#319#320#0" expanded="true" />
+            <element signature="e#347#348#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/RenterPaymentMethod.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="37" column="32" selection-start-line="37" selection-start-column="32" selection-end-line="37" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/OwnerPaymentMethodService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="105" column="46" selection-start-line="105" selection-start-column="46" selection-end-line="105" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/Booking.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/Car.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="49" column="35" selection-start-line="49" selection-start-column="35" selection-end-line="49" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/OwnersHttpService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="253" column="27" lean-forward="true" selection-start-line="253" selection-start-column="27" selection-end-line="253" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/CarsService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="51" column="26" selection-start-line="51" selection-start-column="26" selection-end-line="51" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/CarsHttpService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="47" column="2" lean-forward="true" selection-start-line="47" selection-start-column="2" selection-end-line="47" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/RenterPaymentMethodService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-420">
+          <caret line="47" column="42" selection-start-line="47" selection-start-column="42" selection-end-line="47" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/RenterPaymentMethodHttpService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="45" column="42" lean-forward="true" selection-start-line="45" selection-start-column="42" selection-end-line="45" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1101#1102#0" expanded="true" />
+            <element signature="e#1145#1146#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/Owner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="41" column="33" selection-start-line="41" selection-start-column="33" selection-end-line="41" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/Location.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+          <folding>
+            <element signature="e#114#115#0" expanded="true" />
+            <element signature="e#139#140#0" expanded="true" />
+            <element signature="e#147#148#0" expanded="true" />
+            <element signature="e#377#378#0" expanded="true" />
+            <element signature="e#405#406#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/Session.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="1" lean-forward="true" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/LocationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="26" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/src.zip!/java/util/function/Consumer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="48" column="9" selection-start-line="48" selection-start-column="9" selection-end-line="48" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/NotificationsHttpService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="49" column="51" lean-forward="true" selection-start-line="49" selection-start-column="51" selection-end-line="49" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/models/Review.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="18" lean-forward="true" selection-start-line="15" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/ReviewHttpService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="39" column="39" selection-start-line="39" selection-start-column="39" selection-end-line="39" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/NotificationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="74" column="51" selection-start-line="74" selection-start-column="49" selection-end-line="74" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1222,18 +1373,56 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/BookingService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="115" selection-start-line="115" selection-end-line="115" />
+        <state relative-caret-position="178">
+          <caret line="87" column="28" lean-forward="true" selection-start-line="87" selection-start-column="28" selection-end-line="87" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/LocationHttpService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" column="14" lean-forward="true" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1101#1102#0" expanded="true" />
+            <element signature="e#1145#1146#0" expanded="true" />
+            <element signature="e#1480#1481#0" expanded="true" />
+            <element signature="e#1543#1544#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jersey.core/jersey-server/2.25/5c52b0e90c204715c2511c83e2ea4ad28613ef6f/jersey-server-2.25-sources.jar!/org/glassfish/jersey/server/model/internal/ResourceMethodInvocationHandlerFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="80" selection-start-line="80" selection-end-line="80" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/http/RentersHttpService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="170" column="9" lean-forward="true" selection-start-line="170" selection-start-column="9" selection-end-line="170" selection-end-column="9" />
+        <state relative-caret-position="300">
+          <caret line="227" column="47" lean-forward="true" selection-start-line="227" selection-start-column="47" selection-end-line="227" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jersey.core/jersey-server/2.25/5c52b0e90c204715c2511c83e2ea4ad28613ef6f/jersey-server-2.25-sources.jar!/org/glassfish/jersey/server/model/internal/AbstractJavaResourceMethodDispatcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="152" selection-start-line="152" selection-end-line="152" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/server/services/ReviewService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="75" column="62" selection-start-line="75" selection-start-column="62" selection-end-line="75" selection-end-column="62" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
